@@ -1,3 +1,4 @@
+
 const express = require("express");
 require("express-async-errors");
 
@@ -15,7 +16,7 @@ app.use(
     saveUninitialized: true,
   })
 );
-
+app.use(require("connect-flash")());
 // secret word handling
 // let secretWord = "syzygy"; 
 app.get("/secretWord", (req, res) => {
@@ -26,7 +27,7 @@ app.get("/secretWord", (req, res) => {
     res.locals.errors = req.flash("error");
     res.render("secretWord", { secretWord: req.session.secretWord });
   });
-  
+
   app.post("/secretWord", (req, res) => {
     if (req.body.secretWord.toUpperCase()[0] == "P") {
       req.flash("error", "That word won't work!");
