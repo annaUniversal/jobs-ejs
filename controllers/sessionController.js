@@ -39,8 +39,8 @@ const logonShow = (req, res) => {
     return res.redirect("/");
   }
   res.render("logon", {
-    errors: req.flash("error"),
-    info: req.flash("info"),
+    // errors: req.flash("error"),
+    // info: req.flash("info"),
   });
 };
 
