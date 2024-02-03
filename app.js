@@ -8,6 +8,7 @@ const passportInit = require("./passport/passportInit");
 const secretWordRouter = require("./routes/secretWord");
 const auth = require("./middleware/auth");
 const cookieParser = require("cookie-parser");
+const tasks = require("./routes/tasks");
 const csrf = require("host-csrf");
 
 const app = express();
@@ -82,7 +83,7 @@ app.get("/", (req, res) => {
 });
 app.use("/sessions", require("./routes/sessionRoutes"));
 app.use("/secretWord", auth, secretWordRouter);
-
+app.use("/tasks", auth, tasks);
 
 app.use((req, res) => {
   res.status(404).send(`That page (${req.url}) was not found.`);
