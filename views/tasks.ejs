@@ -1,38 +1,64 @@
-<%- include("partials/head.ejs") %>
-<%- include("partials/header.ejs") %>
+<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
 
 <h2>Tasks List</h2>
-    <table id="tasks-table">
-      <tr id="tasks-table-header">
-        <th>Company</th>
-        <th>Position</th>
-        <th>Status</th>
-        <th colspan="2"></th>
-      </tr>
-      <% if (tasks && tasks.length) { %>
-        <% tasks.forEach((task) => { %>
-          <tr>
-            <td><%= task.category %></td>
-            <td><%= task.taskName %></td>
-            <td><%= task.status %></td>
-            <td><a href="/tasks/edit/<%= task.id %>">
-                <button type="button">edit</button>
-              </a></td>
-            <td><td>
-                <form
-                  method="POST"
-                  action="/tasks/delete/<%= task.id %>"
-                  style="display: inline"
-                >
-                  <button>Delete</button>
-                  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-                </form>
-              </td></td>
-          </tr>
-        <% }) %>
-      <% } %>
-    </table>
 
-    <a href="/tasks/new">
-        <button type="button">Add New Task</button>
+<table>
+  <td>
+    <form method="GET" action="/work">
+      <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      <button>Work Only</button>
+    </form>
+  </td>
+  <td>
+    <form method="POST" action="/prersonal">
+      <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      <button>Prersonal Only</button>
+    </form>
+  </td>
+</table>
+
+<table id="tasks-table">
+  <tr id="tasks-table-header">
+    <th>Category</th>
+    <th>Task description</th>
+    <th>Status</th>
+    <th>Created</th>
+    <th>Updated</th>
+    <th colspan="2"></th>
+  </tr>
+  <% if (tasks && tasks.length) { %> <% tasks.forEach((task) => { %>
+  <tr>
+    <td><%= task.category %></td>
+    <td><%= task.taskName %></td>
+    <td><%= task.status %></td>
+    <td>
+      <%= task.createdAt.toLocaleDateString('en-US', { year: 'numeric', month:
+      'short', day: 'numeric', }) %>
+    </td>
+    <td>
+      <%= task.updatedAt.toLocaleDateString('en-US', { year: 'numeric', month:
+      'short', day: 'numeric', }) %>
+    </td>
+
+    <td>
+      <a href="/tasks/edit/<%= task.id %>">
+        <button type="button">edit</button>
       </a>
+    </td>
+    <td>
+      <form
+        method="POST"
+        action="/tasks/delete/<%= task.id %>"
+        style="display: inline"
+      >
+        <button>Delete</button>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      </form>
+    </td>
+  </tr>
+  <% }) %> <% } %>
+</table>
+
+<a href="/tasks/new">
+  <button type="button">Add New Task</button>
+</a>

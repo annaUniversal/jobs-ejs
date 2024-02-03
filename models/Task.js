@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const TaskSchema = new mongoose.Schema({
   category: {
     type: String,
-    required: [true, "Please, provide the category name"],
-    maxlength: 50,
+    enum: ["work", "prersonal"],
+    default:'Select',
   },
   taskName: {
     type: String,
@@ -14,12 +14,20 @@ const TaskSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["pending", "inProgress", "declined", "done"],
-    default:'pending',
+    default:'Select',
   },
   createdBy:{
     type:mongoose.Types.ObjectId,
     ref:'User',
     required: [true, "Please, provide the user"],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   }
 },{timestamps:true});
 

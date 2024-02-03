@@ -9,6 +9,14 @@ const getAllTasks = async (req, res) => {
   res.render("tasks", { tasks });
 };
 
+const workOnly = async (req, res) => {
+    const tasks = await Task.find({
+      $and: [{ createdBy: req.user._id }, { category: "work" }]
+    }).sort("createdAt");
+  
+    res.render("tasks", { tasks });
+  };
+
 const showNewForm = async (req, res) => {
   res.render("task", { task: null });
 };
@@ -97,4 +105,5 @@ module.exports = {
   createTask,
   updateTask,
   deleteTask,
+  workOnly,
 };

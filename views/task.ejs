@@ -5,7 +5,10 @@
 <form method="POST" action="<%= task ? '/tasks/update/' + task._id : '/tasks' %>">
   <div>
     <label for="category">category:</label>
-    <input type="text" id="category" name="category" value="<%= task ? task.category : '' %>" required />
+    <select id="category" name="category">
+      <option value="work" <%= task && task.work === "work" ? "selected" : '' %> >Work</option>
+      <option value="prersonal" <%= task && task.status === "prersonal" ? "selected" : '' %> >Prersonal</option>
+    </select>
   </div>
   <div>
     <label for="taskName">taskName:</label>
@@ -20,6 +23,20 @@
       <option value="done" <%= task && task.status === "done" ? "selected" : '' %> >done</option>         
     </select>
   </div>
+  <div>
+      <p >Created: <%= task.createdAt.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }); %></p>
+  </div>
+  <div>
+    <p >Updated: <%= task.updatedAt.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    }); %></p>
+</div>
   <button type="submit" id="adding-task"><%= task ? "Update Task" : "Add Task" %></button>
   <input type="hidden" name="_csrf" value="<%= _csrf %>" /> 
 </form>
